@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "src": "mqtt_gtw",
+  "method": "Switch.Toggle",
+  "params": {
+    "id": 0
+  }
+}

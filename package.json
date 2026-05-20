@@ -1,0 +1,29 @@
+{
+  "name": "mqtt-gateway",
+  "version": "1.0.0",
+  "description": "PWA Backend for Shelly controls via MQTT",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.2",
+    "morgan": "^1.10.1",
+    "mqtt": "^5.0.0",
+    "rotating-file-stream": "^3.2.9"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "author": "Looda",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
+  }
+}

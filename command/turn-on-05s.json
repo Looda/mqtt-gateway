@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "src": "mqtt_gtw",
+  "method": "Switch.Set",
+  "params": {
+    "id": 0,
+    "on": true,
+    "toggle_after": 0.5
+  }
+}
