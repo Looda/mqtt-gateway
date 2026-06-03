@@ -65,9 +65,9 @@ node src/server.js
 ```
 
 ### 3. Send an HTTP Request
-To trigger the command, send a GET request to `/command` with the required headers.
+To trigger the command, send a GET request to the gateway. You can use custom headers, Basic Auth, or URL parameters.
 
-**Example using cURL:**
+**Example using Custom Headers:**
 ```bash
 curl -X GET http://localhost:3000/command \
      -H "x-mqtt-user: my_username" \
@@ -75,13 +75,20 @@ curl -X GET http://localhost:3000/command \
      -H "x-mqtt-command: switch-on"
 ```
 
-### Header Requirements
+#### Header Requirements
 
 | Header | Description |
 | :--- | :--- |
 | `x-mqtt-user` | The username for the MQTT broker. Also used to build the topic. |
 | `x-mqtt-pass` | The password for the MQTT broker. |
 | `x-mqtt-command` | The filename (without `.json`) inside the `command/` folder. |
+
+**Example using Basic Auth and URL parameter:**
+```bash 
+curl -X GET http://localhost:3000/command/switch-on \
+     -u "my_username:my_password"
+```
+
 
 ## License
 MIT
