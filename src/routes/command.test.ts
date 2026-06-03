@@ -1,43 +1,15 @@
-const request = require('supertest');
-const express = require('express');
-const router = require('./command');
+import { describe, expect, it, jest } from '@jest/globals';
+import express, { Application } from 'express';
+import request from 'supertest';
+import router from './command.ts';
 
-// Mock dependencies
-jest.mock('mqtt', () => {
-  const EventEmitter = require('events');
-  const mockClient = new EventEmitter();
-  mockClient.end = jest.fn();
-  mockClient.publish = jest.fn((topic, payload, options, callback) => {
-    if (callback) setImmediate(() => callback(null));
-  });
-
-  return {
-    connect: jest.fn((url, options) => {
-      // Clear listeners from previous test runs to prevent side effects
-      mockClient.removeAllListeners();
-
-      // Simulate async connection behavior based on credentials
-      setImmediate(() => {
-        if (options.username === 'test' && options.password === 'password') {
-          mockClient.emit('connect');
-        } else {
-          mockClient.emit('error', { code: 'ECONNREFUSED' });
-        }
-      });
-
-      return mockClient;
-    }),
-  };
-});
-jest.mock('../logger');
-jest.mock('../middlewares/ipFilter', () => (req, res, next) => next());
-jest.mock('fs', () => ({
-  promises: {
-    readFile: jest.fn().mockResolvedValue(JSON.stringify({ method: "Switch.Set", params: { id: 0, on: true } })),
-  },
+jest.mock('../logger.ts');
+jest.mock('../middlewares/ipFilter.ts', () => (_req: any, _res: any, next: any) => next());
+jest.mock('fs/promises', () => ({
+  readFile: jest.fn<() => Promise<string>>().mockResolvedValue(JSON.stringify({ method: "Switch.Set", params: { id: 0, on: true } })),
 }));
 
-const app = express();
+const app: Application = express();
 app.use('/command', router);
 
 describe('GET /command', () => {
@@ -75,7 +47,7 @@ describe('GET /command', () => {
     expect(response.body.error).toBe('No command specified.');
   });
 
-  it('should accept Basic Auth credentials and proceed', async () => {
+  it('should accept Basic Auth credentials and fails with missing command', async () => {
     const auth = Buffer.from('test:password').toString('base64');
     const response = await request(app)
       .get('/command')
@@ -102,7 +74,6 @@ describe('GET /command', () => {
     const response = await request(app)
       .get('/command/toggle')
       .set('Authorization', `Basic ${auth}`);
-
     expect(response.status).toBe(200);
     expect(response.body.success).toBe(true);
   });

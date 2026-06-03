@@ -3,18 +3,19 @@
   "version": "1.0.0",
   "description": "PWA Backend for Shelly controls via MQTT",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
-    "test": "jest"
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.cjs "
   },
   "dependencies": {
     "compression": "^1.8.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^4.18.2",
+    "express": "^4.22.1",
     "morgan": "^1.10.1",
-    "mqtt": "^5.0.0",
+    "mqtt": "^5.15.1",
     "rotating-file-stream": "^3.2.9"
   },
   "engines": {
@@ -23,7 +24,18 @@
   "author": "Looda",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^30.0.0",
+    "@types/morgan": "^1.9.10",
+    "@types/mqtt": "^2.5.0",
+    "@types/supertest": "^7.2.0",
     "jest": "^30.4.2",
-    "supertest": "^7.2.2"
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.10",
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.5"
   }
 }
