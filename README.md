@@ -30,7 +30,7 @@ The application is configured using environment variables. You can set these in 
 | Variable | Description | Default |
 | :--- | :--- | :--- |
 | `GATEWAY_PORT` | The port the Express server listens on. | `3000` |
-| `ALLOWED_IP` | The only IP address allowed to call the gateway. | `127.0.0.1` |
+| `ALLOWED_IP` | The only IP address allowed to call the gateway. Use `*` for no restriction. | `127.0.0.1` |
 | `MQTT_URL` | The URL of the MQTT broker. | `mqtt://localhost:1883` |
 | `MQTT_TOPIC` | The base topic prefix for commands. | `shelly` |
 | `LOG_ROTATION` | The interval for log file rotation (e.g., '1d', '3d'). | `3d` |
@@ -39,9 +39,9 @@ The application is configured using environment variables. You can set these in 
 
 ```text
 .
-├── command/           # Place your JSON command files here
-│   ├── toggle.json    # Example: http://.../command with x-mqtt-command: toggle
-│   └── status.json
+├── command/              # Place your JSON command files here
+│   ├── toggle.json       # Example: http://.../command with command: toggle
+│   └── turn-on-05s.json  # Example with command turn-on-05s to simulate "click"
 ├── src/server.js          # Main application logic
 └── package.json
 ```

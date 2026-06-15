@@ -27,7 +27,7 @@ const ipFilter = (req: Request, res: Response, next: NextFunction): void => {
     clientIp = clientIp.replace('::ffff:', '');
   }
 
-  if ((isLoopbackAddress(clientIp) && isLoopbackAddress(config.allowedIP)) || (clientIp === config.allowedIP)) {
+  if (config.allowedIP === '*' || (clientIp === config.allowedIP) || (isLoopbackAddress(clientIp) && isLoopbackAddress(config.allowedIP))) {
     next();
   } else {
     logger.warn(`Blocked access from IP: ${clientIp} (Configured: ${config.allowedIP})`);
